@@ -10,35 +10,45 @@
   <body>
     <header>
       <h1>Futbolle</h1>
-      <div class="header-buttons">
+      <div class="headerButtons">
         <button>Help</button>
         <button>Stats</button>
       </div>
     </header>
     <main>
-      <section id="start-screen">
-        <p>START SCREEN</p>
-        <div class="labels">
-          <label class="label-difficulty">
-            <input type="radio" name="difficulty" value="easy" checked />
-            Fácil
+      <section id="startView">
+        <p>
+          Adivina el jugador secreto en 8 intentos. Las pistas te indicarán
+          nacionalidad, club, posición, edad, valoración global y altura.
+          Selecciona tu nivel y demuestra cuánto sabes.
+        </p>
+        <form id="startForm">
+          <label id="playerName">
+            Ingresa tu nombre:
+            <input type="text" name="playerName" minlength="3" required />
           </label>
-          <label class="label-difficulty">
-            <input type="radio" name="difficulty" value="normal" />
-            Normal
-          </label>
-          <label class="label-difficulty">
-            <input type="radio" name="difficulty" value="hard" />
-            Difícil
-          </label>
-        </div>
+          <fieldset id="levelFieldset">
+            <legend>Selecciona tu nivel:</legend>
+            <div id="labels">
+              <input type="radio" id="easy" name="level" value="easy" checked />
+              <label for="easy">Fácil</label>
+              <input type="radio" id="normal" name="level" value="normal" />
+              <label for="normal">Medio</label>
+              <input type="radio" id="hard" name="level" value="hard" />
+              <label for="hard">Difícil</label>
+            </div>
+          </fieldset>
+          <button type="submit" class="startButton">Iniciar Juego</button>
+        </form>
       </section>
-      <section id="game-screen">
-        <p>GAME SCREEN</p>
+      <section id="gameView">
+        <p>GAME VIEW</p>
       </section>
-      <dialog id="dialogo-ganador">Se ganó el juego</dialog>
-      <dialog id="dialogo-perdedor">Se perdió el juego</dialog>
+      <dialog id="dialogoGanador">Se ganó el juego</dialog>
+      <dialog id="dialogoPerdedor">Se perdió el juego</dialog>
     </main>
-    <footer></footer>
+    <footer class="footer">
+      <p>Este es el footer bro</p>
+    </footer>
   </body>
 </html>
