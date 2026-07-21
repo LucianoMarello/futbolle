@@ -1,0 +1,48 @@
+header {
+  background-color: aquamarine;
+  height: 15vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
+#start-screen {
+  background-color: seashell;
+  height: 80vh;
+}
+
+#game-screen {
+  background-color: blue;
+  height: 80vh;
+}
+
+.labels input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.labels label {
+  display: inline-block;
+  padding: 12px 24px;
+  margin-right: 10px;
+  background-color: #f0f0f0;
+  color: #333;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid #ddd;
+}
+
+.labels label:hover {
+  background-color: #e0e0e0;
+}
+
+.labels input[type="radio"]:checked {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+  box-shadow: 0 4px 6px rgba(0, 123, 255, 0.2);
+}

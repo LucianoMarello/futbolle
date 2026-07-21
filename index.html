@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Futbolle</title>
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Futbolle</h1>
+      <div class="header-buttons">
+        <button>Help</button>
+        <button>Stats</button>
+      </div>
+    </header>
+    <main>
+      <section id="start-screen">
+        <p>START SCREEN</p>
+        <div class="labels">
+          <label class="label-difficulty">
+            <input type="radio" name="difficulty" value="easy" checked />
+            Fácil
+          </label>
+          <label class="label-difficulty">
+            <input type="radio" name="difficulty" value="normal" />
+            Normal
+          </label>
+          <label class="label-difficulty">
+            <input type="radio" name="difficulty" value="hard" />
+            Difícil
+          </label>
+        </div>
+      </section>
+      <section id="game-screen">
+        <p>GAME SCREEN</p>
+      </section>
+      <dialog id="dialogo-ganador">Se ganó el juego</dialog>
+      <dialog id="dialogo-perdedor">Se perdió el juego</dialog>
+    </main>
+    <footer></footer>
+  </body>
+</html>
