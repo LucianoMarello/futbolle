@@ -16,16 +16,17 @@
       </div>
     </header>
     <main>
-      <section id="startView">
+      <!-- Vista de Inicio -->
+      <section id="startView" class="hidden">
         <p>
           Adivina el jugador secreto en 8 intentos. Las pistas te indicarán
           nacionalidad, club, posición, edad, valoración global y altura.
           Selecciona tu nivel y demuestra cuánto sabes.
         </p>
         <form id="startForm">
-          <label id="playerName">
+          <label id="userName">
             Ingresa tu nombre:
-            <input type="text" name="playerName" minlength="3" required />
+            <input type="text" name="userName" minlength="3" required />
           </label>
           <fieldset id="levelFieldset">
             <legend>Selecciona tu nivel:</legend>
@@ -41,11 +42,40 @@
           <button type="submit" class="startButton">Iniciar Juego</button>
         </form>
       </section>
-      <section id="gameView" class="hidden">
-        <p>GAME VIEW</p>
+      <!-- Vista de juego -->
+      <section id="gameView">
+        <div id="gameControls">
+          <div id="timerDisplay">00:00:00</div>
+          <div id="searchWrapper">
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Escribe un jugador..."
+            />
+            <ul id="autocompleteList" class="hidden"></ul>
+          </div>
+        </div>
+
+        <div id="photoHintContainer" class="hidden">
+          <img id="secretPlayerPhoto" src="" alt="Pista del jugador" />
+        </div>
+
+        <div id="boardContainer">
+          <div id="boardHeader">
+            <span class="colStat">Nom</span>
+            <span class="colStat">Pais</span>
+            <span class="colStat">Club</span>
+            <span class="colStat">Pos</span>
+            <span class="colStat">Edad</span>
+            <span class="colStat">Val</span>
+            <span class="colStat">Alt</span>
+          </div>
+          <!-- ACA VAN LOS INTENTOS DESDE JS -->
+          <div id="attemptsContainer"></div>
+        </div>
       </section>
-      <dialog id="dialogoGanador">Se ganó el juego</dialog>
-      <dialog id="dialogoPerdedor">Se perdió el juego</dialog>
+      <dialog id="winnerDialog">Se ganó el juego</dialog>
+      <dialog id="loserDialog">Se perdió el juego</dialog>
     </main>
     <footer class="footer">
       <p>Este es el footer bro</p>

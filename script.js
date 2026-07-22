@@ -10,8 +10,8 @@ var currentSession = {
 var startForm = document.getElementById("startForm");
 var startView = document.getElementById("startView");
 var gameView = document.getElementById("gameView");
-var dialogoGanador = document.getElementById("dialogoGanador");
-var dialogoPerdedor = document.getElementById("dialogoPerdedor");
+var winnerDialog = document.getElementById("winnerDialog");
+var loserDialog = document.getElementById("loserDialog");
 
 //Functions
 function showGameView() {
@@ -48,7 +48,7 @@ function handleStartSubmit(event) {
 
   event.preventDefault();
 
-  inputName = startForm.elements["playerName"].value;
+  inputName = startForm.elements["userName"].value;
   inputDifficulty = startForm.elements["level"].value;
 
   currentSession.userName = inputName;

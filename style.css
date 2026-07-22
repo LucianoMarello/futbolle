@@ -6,13 +6,20 @@ header {
   align-items: center;
   padding: 0 20px;
 }
-
 body {
   font-family: Arial, sans-serif;
   background-color: #dbf2d4;
   background-color: #0b1a2a;
 }
+.footer {
+  background-color: #c35b00;
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+/* VISTA DE INICIO */
 #startView {
   display: flex;
   flex-direction: column;
@@ -22,13 +29,11 @@ body {
   text-align: center;
   color: #ffffff;
 }
-
 #startView p {
   margin: 0 0 2rem 0;
   font-size: 1.1rem;
   line-height: 1.5;
 }
-
 #startForm {
   display: flex;
   flex-direction: column;
@@ -36,8 +41,7 @@ body {
   gap: 1.5rem;
   width: 100%;
 }
-
-#playerName {
+#userName {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -46,8 +50,7 @@ body {
   font-size: 1.2rem;
   font-weight: bold;
 }
-
-#playerName input {
+#userName input {
   width: 80%;
   margin: 0.5rem 0 0 0;
   padding: 0.8rem;
@@ -58,7 +61,6 @@ body {
   color: #ffffff;
   font-size: 1.1rem;
 }
-
 #levelFieldset {
   display: flex;
   flex-direction: column;
@@ -67,7 +69,6 @@ body {
   font-size: 1.2rem;
   font-weight: bold;
 }
-
 #labels {
   display: flex;
   flex-direction: row;
@@ -76,12 +77,10 @@ body {
   width: 100%;
   margin: 1rem 0 0 0;
 }
-
 #labels input {
   position: absolute;
   opacity: 0;
 }
-
 #labels label {
   padding: 0.6rem 1.5rem;
   border: 2px solid #209bb4;
@@ -92,12 +91,10 @@ body {
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
-
 #labels input:checked + label {
   background-color: #209bb4;
   color: #0b1a2a;
 }
-
 .startButton {
   padding: 1rem 2.5rem;
   border: none;
@@ -108,25 +105,113 @@ body {
   font-weight: bold;
   cursor: pointer;
 }
-
 .startButton:hover {
   background-color: #e5c338;
 }
 
 /* Game View */
 #gameView {
-  background-color: rgba(47, 189, 240, 0.395);
-  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  color: #ffffff;
 }
-
-.footer {
-  background-color: #c35b00;
-  height: 10vh;
+#gameControls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  margin: 0 0 2rem 0;
+}
+#searchWrapper {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width: 100%;
+}
+#searchInput {
+  padding: 1rem;
+  border: 2px solid #209bb4;
+  border-radius: 0.8rem;
+  background-color: #ffffff;
+  color: #000000;
+  font-size: 1.2rem;
+}
+#autocompleteList {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  max-height: 250px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #209bb4;
+  background-color: #06121e;
+  overflow-y: auto;
+}
+.autocompleteItem {
+  padding: 0.8rem;
+  border-bottom: 1px solid #1a3a5a;
+  color: #ffffff;
+  cursor: pointer;
+}
+.autocompleteItem:hover {
+  background-color: #209bb4;
+  color: #000000;
+}
+#timerDisplay {
+  padding: 1rem;
+  border: 2px solid #f9d949;
+  border-radius: 4px;
+  background-color: #06121e;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+#photoHintContainer {
   display: flex;
   justify-content: center;
-  align-items: center;
+  width: 100%;
+  margin: 0 0 2rem 0;
+}
+#secretPlayerPhoto {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: filter 0.3s ease;
+}
+#boardContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+#boardHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 0.5rem 0;
+  border-bottom: 2px dashed #ffffff;
+  font-weight: bold;
+  text-align: center;
+}
+#attemptsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  width: 100%;
+  margin: 1rem 0 0 0;
+}
+.colStat {
+  flex: 1;
+  text-align: center;
 }
 
+/* AUXILIAR */
 .hidden {
   display: none !important;
 }
+
+/* MEDIA QUERIES */
