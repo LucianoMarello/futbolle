@@ -10,18 +10,15 @@ header {
 body {
   font-family: Arial, sans-serif;
   background-color: #dbf2d4;
+  background-color: #0b1a2a;
 }
 
 #startView {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 80%;
   margin: 2rem auto;
   padding: 2rem;
-  border: 1px solid #f9d949;
-  border-radius: 15px;
-  background-color: #0b1a2a;
   text-align: center;
   color: #ffffff;
 }
@@ -118,7 +115,6 @@ body {
 
 /* Game View */
 #gameView {
-  display: none;
   background-color: rgba(47, 189, 240, 0.395);
   height: 80vh;
 }
@@ -129,4 +125,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.hidden {
+  display: none !important;
 }
