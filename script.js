@@ -8,11 +8,12 @@ var currentSession = {
   attempts: 0,
 };
 //DOM elements
-var startForm = document.getElementById("startForm");
 var startView = document.getElementById("startView");
 var gameView = document.getElementById("gameView");
 var winnerDialog = document.getElementById("winnerDialog");
 var loserDialog = document.getElementById("loserDialog");
+var startForm = document.getElementById("startForm");
+var btnStart = document.getElementById("startButton");
 var searchInput = document.getElementById("searchInput");
 var autocompleteList = document.getElementById("autocompleteList");
 //Functions
@@ -26,15 +27,36 @@ function clearAutocompleteList() {
   }
   autocompleteList.classList.add("hidden");
 }
+function createPlayerSelectHandler(selectedPlayer) {
+  return function () {
+    searchInput.value = selectedPlayer.name;
+    clearAutocompleteList();
+    console.log("Jugador seleccionado: " + selectedPlayer.name);
+  };
+  //COMPARAR JUGADOR SELECCIONADO CON JUGADOR SECRETO
+}
 function renderAutocompleteResults(playersData) {
+  var i;
+  var li;
+  var nombreLimpio;
+  var jugadorModificado;
+
   clearAutocompleteList();
 
   if (playersData.length === 0) {
     return;
   }
 
-  console.log("Datos recibidos para renderizar:", playersData);
-
+  for (i = 0; i < playersData.length; i++) {
+    li = document.createElement("li");
+    nombreLimpio = playersData[i].name.replace(/^\d+\s*/, "");
+    li.textContent = nombreLimpio;
+    li.className = "autocompleteItem";
+    jugadorModificado = playersData[i];
+    jugadorModificado.name = nombreLimpio;
+    li.addEventListener("click", createPlayerSelectHandler(jugadorModificado));
+    autocompleteList.appendChild(li);
+  }
   autocompleteList.classList.remove("hidden");
 }
 //Api call
@@ -56,6 +78,8 @@ function fetchSecretPlayer() {
     .catch(function (error) {
       console.error("Error al obtener el jugador secreto: ", error);
       console.log("Mostrar con dialog luego.");
+      btnStart.disabled = false;
+      btnStart.textContent = "Iniciar Juego";
     });
 }
 function fetchAutocompletePlayers(query) {
@@ -83,6 +107,9 @@ function handleStartSubmit(event) {
   var inputDifficulty;
 
   event.preventDefault();
+
+  btnStart.disabled = true;
+  btnStart.textContent = "Cargando...";
 
   inputName = startForm.elements["userName"].value;
   inputDifficulty = startForm.elements["level"].value;
