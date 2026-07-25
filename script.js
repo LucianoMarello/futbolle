@@ -16,6 +16,7 @@ var startForm = document.getElementById("startForm");
 var btnStart = document.getElementById("startButton");
 var searchInput = document.getElementById("searchInput");
 var autocompleteList = document.getElementById("autocompleteList");
+var attemptsContainer = document.getElementById("attemptsContainer");
 //Functions
 function showGameView() {
   startView.classList.add("hidden");
@@ -27,13 +28,103 @@ function clearAutocompleteList() {
   }
   autocompleteList.classList.add("hidden");
 }
-function createPlayerSelectHandler(selectedPlayer) {
-  return function () {
-    searchInput.value = selectedPlayer.name;
-    clearAutocompleteList();
-    console.log("Jugador seleccionado: " + selectedPlayer.name);
+function compareString(guessText, secretText) {
+  if (guessText.toLowerCase() === secretText.toLowerCase()) {
+    return "match";
+  }
+  return "mismatch";
+}
+function compareNumber(guessNum, secretNum) {
+  if (guessNum === secretNum) {
+    return "match";
+  } else if (secretNum > guessNum) {
+    return "higher";
+  } else {
+    return "lower";
+  }
+}
+function analyzeAttempt(guessedPlayer, secretPlayer) {
+  return {
+    playerInfo: guessedPlayer,
+    results: {
+      nationality: compareString(
+        guessedPlayer.nationality,
+        secretPlayer.nationality,
+      ),
+      club: compareString(guessedPlayer.club, secretPlayer.club),
+      position: compareString(guessedPlayer.position, secretPlayer.position),
+      age: compareNumber(guessedPlayer.age, secretPlayer.age),
+      overall: compareNumber(guessedPlayer.overall, secretPlayer.overall),
+      heightCm: compareNumber(guessedPlayer.heightCm, secretPlayer.heightCm),
+    },
   };
-  //COMPARAR JUGADOR SELECCIONADO CON JUGADOR SECRETO
+}
+function createStatElement(value, status) {
+  var span = document.createElement("span");
+  var text = value;
+
+  if (status === "higher") {
+    text += " ↑";
+  } else if (status === "lower") {
+    text += " ↓";
+  }
+
+  span.textContent = text;
+  span.className = "colStat " + status;
+
+  return span;
+}
+function renderAttemptCard(analysis) {
+  var card;
+  var nameDiv;
+  var statsDiv;
+
+  card = document.createElement("div");
+  card.className = "attemptCard";
+
+  nameDiv = document.createElement("div");
+  nameDiv.className = "attemptName";
+  nameDiv.textContent = analysis.playerInfo.name;
+
+  statsDiv = document.createElement("div");
+  statsDiv.className = "attemptStats";
+
+  statsDiv.appendChild(
+    createStatElement(
+      analysis.playerInfo.nationality,
+      analysis.results.nationality,
+    ),
+  );
+  statsDiv.appendChild(
+    createStatElement(analysis.playerInfo.club, analysis.results.club),
+  );
+  statsDiv.appendChild(
+    createStatElement(analysis.playerInfo.position, analysis.results.position),
+  );
+  statsDiv.appendChild(
+    createStatElement(analysis.playerInfo.age, analysis.results.age),
+  );
+  statsDiv.appendChild(
+    createStatElement(analysis.playerInfo.overall, analysis.results.overall),
+  );
+  statsDiv.appendChild(
+    createStatElement(analysis.playerInfo.heightCm, analysis.results.heightCm),
+  );
+
+  card.appendChild(nameDiv);
+  card.appendChild(statsDiv);
+
+  attemptsContainer.appendChild(card);
+}
+function playerSelectHandler(selectedPlayer) {
+  return function () {
+    var attemptAnalysis;
+    currentSession.attempts++;
+    searchInput.value = "";
+    clearAutocompleteList();
+    attemptAnalysis = analyzeAttempt(selectedPlayer, secretPlayer);
+    renderAttemptCard(attemptAnalysis);
+  };
 }
 function renderAutocompleteResults(playersData) {
   var i;
@@ -54,7 +145,7 @@ function renderAutocompleteResults(playersData) {
     li.className = "autocompleteItem";
     jugadorModificado = playersData[i];
     jugadorModificado.name = nombreLimpio;
-    li.addEventListener("click", createPlayerSelectHandler(jugadorModificado));
+    li.addEventListener("click", playerSelectHandler(jugadorModificado));
     autocompleteList.appendChild(li);
   }
   autocompleteList.classList.remove("hidden");
