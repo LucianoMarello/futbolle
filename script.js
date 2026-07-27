@@ -1,4 +1,5 @@
 "use strict";
+
 //Global variables
 var secretPlayer = null;
 var searchTimeout = null;
@@ -6,7 +7,11 @@ var currentSession = {
   userName: "",
   difficulty: "",
   attempts: 0,
+  attemptedIds: [],
 };
+var timerInterval = null;
+var secondsElapsed = 0;
+
 //DOM elements
 var startView = document.getElementById("startView");
 var gameView = document.getElementById("gameView");
@@ -17,6 +22,8 @@ var btnStart = document.getElementById("startButton");
 var searchInput = document.getElementById("searchInput");
 var autocompleteList = document.getElementById("autocompleteList");
 var attemptsContainer = document.getElementById("attemptsContainer");
+var timerDisplay = document.getElementById("timerDisplay");
+
 //Functions
 function showGameView() {
   startView.classList.add("hidden");
@@ -116,21 +123,83 @@ function renderAttemptCard(analysis) {
 
   attemptsContainer.appendChild(card);
 }
+function formatTime(totalSeconds) {
+  var minutes = Math.floor(totalSeconds / 60);
+  var seconds = totalSeconds % 60;
+
+  var minStr = minutes < 10 ? "0" + minutes : minutes;
+  var secStr = seconds < 10 ? "0" + seconds : seconds;
+
+  return minStr + ":" + secStr;
+}
+function startTimer() {
+  if (timerInterval !== null) {
+    return;
+  }
+  timerInterval = setInterval(function () {
+    secondsElapsed++;
+    timerDisplay.textContent = formatTime(secondsElapsed);
+  }, 1000);
+}
+function stopTimer() {
+  if (timerInterval !== null) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+}
+function checkGameStatus(guessedPlayer) {
+  if (guessedPlayer.id === secretPlayer.id) {
+    stopTimer();
+    winnerDialog.textContent =
+      "Felicidades! Adivinaste al jugador en " +
+      currentSession.attempts +
+      " intentos.";
+    winnerDialog.showModal();
+    searchInput.disabled = true;
+    //Detener temporizador
+    return;
+  }
+
+  if (currentSession.attempts >= 8) {
+    stopTimer();
+    loserDialog.textContent =
+      "Perdiste. El jugador secreto era: " + secretPlayer.name;
+    loserDialog.showModal();
+    searchInput.disabled = true;
+    //Detener tempo
+  }
+}
 function playerSelectHandler(selectedPlayer) {
   return function () {
     var attemptAnalysis;
+
+    if (currentSession.attemptedIds.indexOf(selectedPlayer.id) !== -1) {
+      console.warn(
+        "Intento bloqueado: El jugador " +
+          selectedPlayer.name +
+          " ya fue ingresado.",
+      );
+      searchInput.value = "";
+      clearAutocompleteList();
+      return;
+    }
+    currentSession.attemptedIds.push(selectedPlayer.id);
     currentSession.attempts++;
+    if (currentSession.attempts === 1) {
+      startTimer();
+    }
     searchInput.value = "";
     clearAutocompleteList();
     attemptAnalysis = analyzeAttempt(selectedPlayer, secretPlayer);
     renderAttemptCard(attemptAnalysis);
+    checkGameStatus(selectedPlayer);
   };
 }
 function renderAutocompleteResults(playersData) {
   var i;
   var li;
-  var nombreLimpio;
-  var jugadorModificado;
+  var cleanName;
+  var modifiedPlayer;
 
   clearAutocompleteList();
 
@@ -140,16 +209,17 @@ function renderAutocompleteResults(playersData) {
 
   for (i = 0; i < playersData.length; i++) {
     li = document.createElement("li");
-    nombreLimpio = playersData[i].name.replace(/^\d+\s*/, "");
-    li.textContent = nombreLimpio;
+    cleanName = playersData[i].name.replace(/^\d+\s*/, "");
+    li.textContent = cleanName;
     li.className = "autocompleteItem";
-    jugadorModificado = playersData[i];
-    jugadorModificado.name = nombreLimpio;
-    li.addEventListener("click", playerSelectHandler(jugadorModificado));
+    modifiedPlayer = playersData[i];
+    modifiedPlayer.name = cleanName;
+    li.addEventListener("click", playerSelectHandler(modifiedPlayer));
     autocompleteList.appendChild(li);
   }
   autocompleteList.classList.remove("hidden");
 }
+
 //Api call
 function fetchSecretPlayer() {
   var url = "https://futbolle-daw-uai-2026.onrender.com/api/players/random";
@@ -163,7 +233,7 @@ function fetchSecretPlayer() {
     })
     .then(function (data) {
       secretPlayer = data;
-      console.log("Jugador secreto obtenido con éxito.");
+      console.log("Jugador secreto obtenido con éxito: " + secretPlayer.name);
       showGameView();
     })
     .catch(function (error) {
@@ -192,6 +262,7 @@ function fetchAutocompletePlayers(query) {
       console.error("Fallo en el autocompletado:", error);
     });
 }
+
 //Event listeners
 function handleStartSubmit(event) {
   var inputName;
