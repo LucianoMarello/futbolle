@@ -1,16 +1,18 @@
 "use strict";
 
 //Global variables
-var secretPlayer = null;
-var searchTimeout = null;
-var currentSession = {
-  userName: "",
-  difficulty: "",
-  attempts: 0,
-  attemptedIds: [],
-};
-var timerInterval = null;
-var secondsElapsed = 0;
+{
+  var secretPlayer = null;
+  var searchTimeout = null;
+  var currentSession = {
+    userName: "",
+    difficulty: "",
+    attempts: 0,
+    attemptedIds: [],
+  };
+  var timerInterval = null;
+  var secondsElapsed = 0;
+}
 
 //DOM elements
 {
@@ -31,6 +33,11 @@ var secondsElapsed = 0;
   var photoHintContainer = document.getElementById("photoHintContainer");
   var secretPlayerPhoto = document.getElementById("secretPlayerPhoto");
   var textHintContainer = document.getElementById("textHintContainer");
+  var statsDialog = document.getElementById("statsDialog");
+  var btnOpenStats = document.getElementById("btnOpenStats");
+  var btnCloseStats = document.getElementById("btnCloseStats");
+  var statsBody = document.getElementById("statsBody");
+  var sortStatsInput = document.getElementById("sortStatsInput");
 }
 
 //Functions
@@ -186,6 +193,7 @@ function checkGameStatus(guessedPlayer) {
   if (guessedPlayer.id === secretPlayer.id) {
     stopTimer();
     score = calculateScore();
+    saveMatchResult(score);
     winnerMessage.textContent =
       "¡Felicidades " +
       currentSession.userName +
@@ -205,6 +213,7 @@ function checkGameStatus(guessedPlayer) {
 
   if (currentSession.attempts >= 8) {
     stopTimer();
+    saveMatchResult(0);
     loserMessage.textContent =
       "Perdiste. El jugador secreto era: " + secretPlayer.name;
     loserDialog.showModal();
@@ -323,6 +332,65 @@ function updateHints() {
     }
   }
 }
+function saveMatchResult(finalScore) {
+  var stats = JSON.parse(localStorage.getItem("futbolle_stats")) || [];
+  var now = new Date();
+  var matchData = {
+    name: currentSession.userName,
+    result: finalScore > 0 ? "Ganó" : "Perdió",
+    attempts: currentSession.attempts,
+    duration: formatTime(secondsElapsed),
+    dateString: now.toLocaleDateString() + " " + now.toLocaleTimeString(),
+    time: now.getTime(),
+    score: finalScore,
+  };
+  stats.push(matchData);
+  localStorage.setItem("futbolle_stats", JSON.stringify(stats));
+}
+function createTableCell(text) {
+  var td = document.createElement("td");
+  td.textContent = text;
+  td.className = "tdStats";
+  return td;
+}
+function renderStats() {
+  var stats = JSON.parse(localStorage.getItem("futbolle_stats")) || [];
+  var sortValue = sortStatsInput.value;
+  var i, tr;
+
+  stats.sort(function (a, b) {
+    if (sortValue === "dateDesc") return b.time - a.time;
+    if (sortValue === "dateAsc") return a.time - b.time;
+    if (sortValue === "attemptsAsc") return a.attempts - b.attempts;
+    if (sortValue === "attemptsDesc") return b.attempts - a.attempts;
+    if (sortValue === "scoreDesc") return b.score - a.score;
+    return 0;
+  });
+
+  while (statsBody.firstChild) {
+    statsBody.removeChild(statsBody.firstChild);
+  }
+
+  for (i = 0; i < stats.length; i++) {
+    tr = document.createElement("tr");
+
+    tr.appendChild(createTableCell(stats[i].name));
+    tr.appendChild(createTableCell(stats[i].result));
+    tr.appendChild(createTableCell(stats[i].attempts));
+    tr.appendChild(createTableCell(stats[i].duration));
+    tr.appendChild(createTableCell(stats[i].dateString));
+    tr.appendChild(createTableCell(stats[i].score));
+
+    statsBody.appendChild(tr);
+  }
+}
+function openStatsModal() {
+  renderStats();
+  statsDialog.showModal();
+}
+function closeStatsModal() {
+  statsDialog.close();
+}
 
 //Api call
 function fetchSecretPlayer() {
@@ -407,3 +475,6 @@ startForm.addEventListener("submit", handleStartSubmit);
 searchInput.addEventListener("input", handleSearchInput);
 btnRestartWin.addEventListener("click", resetGame);
 btnRestartLose.addEventListener("click", resetGame);
+btnOpenStats.addEventListener("click", openStatsModal);
+btnCloseStats.addEventListener("click", closeStatsModal);
+sortStatsInput.addEventListener("change", renderStats);

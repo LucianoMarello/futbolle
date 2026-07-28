@@ -13,12 +13,12 @@
       <h1>Futbolle</h1>
       <div class="headerButtons">
         <button>Help</button>
-        <button>Stats</button>
+        <button id="btnOpenStats">Stats</button>
       </div>
     </header>
     <main>
       <!-- Vista de Inicio -->
-      <section id="startView" ">
+      <section id="startView">
         <p>
           Adivina el jugador secreto en 8 intentos. Las pistas te indicarán
           nacionalidad, club, posición, edad, valoración global y altura.
@@ -40,7 +40,9 @@
               <label for="hard">Difícil</label>
             </div>
           </fieldset>
-          <button type="submit" id="startButton">Iniciar Juego</button>
+          <button type="submit" id="startButton" class="startButton">
+            Iniciar Juego
+          </button>
         </form>
       </section>
       <!-- Vista de juego -->
@@ -76,12 +78,46 @@
         </div>
       </section>
       <dialog id="winnerDialog">
+        <h2 class="dialogTitle">¡Ganaste!</h2>
         <p id="winnerMessage"></p>
-        <button id="btnRestartWin" class="restartButton">Jugar de Nuevo</button>
+        <button id="btnRestartWin" class="startButton">Jugar de Nuevo</button>
       </dialog>
       <dialog id="loserDialog">
+        <h2 class="dialogTitle">Perdiste...</h2>
         <p id="loserMessage"></p>
-        <button id="btnRestartLose" class="restartButton">Intentar otra vez</button>
+        <button id="btnRestartLose" class="startButton">
+          Intentar otra vez
+        </button>
+      </dialog>
+      <dialog id="statsDialog" class="modalDialog">
+        <h2 class="dialogTitle">Historial de Partidas</h2>
+        <div id="sortStats">
+          <label for="sortStatsInput">Ordenar por:</label>
+          <select id="sortStatsInput">
+            <option value="dateDesc">Fecha (Más recientes)</option>
+            <option value="dateAsc">Fecha (Más antiguas)</option>
+            <option value="attemptsAsc">Intentos (Menor a Mayor)</option>
+            <option value="attemptsDesc">Intentos (Mayor a Menor)</option>
+          </select>
+        </div>
+
+        <table id="statsTable">
+          <thead>
+            <tr>
+              <th>Jugador</th>
+              <th>Resultado</th>
+              <th>Intentos</th>
+              <th>Duración</th>
+              <th>Fecha y Hora</th>
+              <th>Puntaje</th>
+            </tr>
+          </thead>
+          <tbody id="statsBody"></tbody>
+        </table>
+        <!-- BORRAR style -->
+        <div style="text-align: center">
+          <button id="btnCloseStats" class="startButton">Cerrar</button>
+        </div>
       </dialog>
     </main>
     <footer class="footer">
