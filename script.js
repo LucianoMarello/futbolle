@@ -13,16 +13,25 @@ var timerInterval = null;
 var secondsElapsed = 0;
 
 //DOM elements
-var startView = document.getElementById("startView");
-var gameView = document.getElementById("gameView");
-var winnerDialog = document.getElementById("winnerDialog");
-var loserDialog = document.getElementById("loserDialog");
-var startForm = document.getElementById("startForm");
-var btnStart = document.getElementById("startButton");
-var searchInput = document.getElementById("searchInput");
-var autocompleteList = document.getElementById("autocompleteList");
-var attemptsContainer = document.getElementById("attemptsContainer");
-var timerDisplay = document.getElementById("timerDisplay");
+{
+  var startView = document.getElementById("startView");
+  var gameView = document.getElementById("gameView");
+  var winnerDialog = document.getElementById("winnerDialog");
+  var loserDialog = document.getElementById("loserDialog");
+  var startForm = document.getElementById("startForm");
+  var btnStart = document.getElementById("startButton");
+  var searchInput = document.getElementById("searchInput");
+  var autocompleteList = document.getElementById("autocompleteList");
+  var attemptsContainer = document.getElementById("attemptsContainer");
+  var timerDisplay = document.getElementById("timerDisplay");
+  var btnRestarWin = document.getElementById("btnRestartWin");
+  var btnRestartLose = document.getElementById("btnRestartLose");
+  var winnerMessage = document.getElementById("winnerMessage");
+  var loserMessage = document.getElementById("loserMessage");
+  var photoHintContainer = document.getElementById("photoHintContainer");
+  var secretPlayerPhoto = document.getElementById("secretPlayerPhoto");
+  var textHintContainer = document.getElementById("textHintContainer");
+}
 
 //Functions
 function showGameView() {
@@ -147,26 +156,59 @@ function stopTimer() {
     timerInterval = null;
   }
 }
+function calculateScore() {
+  var baseScore = 0;
+  var attemptsPenalty = 0;
+  var timeBonus = 0;
+  var finalScore = 0;
+  if (currentSession.difficulty === "easy") {
+    baseScore = 60;
+  } else if (currentSession.difficulty === "normal") {
+    baseScore = 80;
+  } else if (currentSession.difficulty === "hard") {
+    baseScore = 100;
+  }
+  attemptsPenalty = (currentSession.attempts - 1) * 10;
+  if (secondsElapsed < 60) {
+    timeBonus = 20;
+  } else if (secondsElapsed < 120) {
+    timeBonus = 10;
+  }
+  finalScore = baseScore - attemptsPenalty + timeBonus;
+  if (finalScore < 10) {
+    return 10;
+  }
+  return finalScore;
+}
 function checkGameStatus(guessedPlayer) {
+  var score = 0;
+
   if (guessedPlayer.id === secretPlayer.id) {
     stopTimer();
-    winnerDialog.textContent =
-      "Felicidades! Adivinaste al jugador en " +
+    score = calculateScore();
+    winnerMessage.textContent =
+      "¡Felicidades " +
+      currentSession.userName +
+      "! Adivinaste en " +
       currentSession.attempts +
-      " intentos.";
+      " intento(s).\n" +
+      "Tiempo: " +
+      formatTime(secondsElapsed) +
+      "\n" +
+      "Puntaje Final: " +
+      score +
+      " pts.";
     winnerDialog.showModal();
     searchInput.disabled = true;
-    //Detener temporizador
     return;
   }
 
   if (currentSession.attempts >= 8) {
     stopTimer();
-    loserDialog.textContent =
+    loserMessage.textContent =
       "Perdiste. El jugador secreto era: " + secretPlayer.name;
     loserDialog.showModal();
     searchInput.disabled = true;
-    //Detener tempo
   }
 }
 function playerSelectHandler(selectedPlayer) {
@@ -192,6 +234,7 @@ function playerSelectHandler(selectedPlayer) {
     clearAutocompleteList();
     attemptAnalysis = analyzeAttempt(selectedPlayer, secretPlayer);
     renderAttemptCard(attemptAnalysis);
+    updateHints();
     checkGameStatus(selectedPlayer);
   };
 }
@@ -219,6 +262,67 @@ function renderAutocompleteResults(playersData) {
   }
   autocompleteList.classList.remove("hidden");
 }
+function resetGame() {
+  currentSession.attempts = 0;
+  currentSession.attemptedIds = [];
+  stopTimer();
+  secondsElapsed = 0;
+  timerDisplay.textContent = "00:00";
+  while (attemptsContainer.firstChild) {
+    attemptsContainer.removeChild(attemptsContainer.firstChild);
+  }
+  searchInput.value = "";
+  searchInput.disabled = false;
+  winnerDialog.close();
+  loserDialog.close();
+  fetchSecretPlayer();
+}
+function initializeHints() {
+  if (currentSession.difficulty === "easy") {
+    secretPlayerPhoto.src = secretPlayer.photo;
+    secretPlayerPhoto.className = "blurLevel8";
+    photoHintContainer.classList.remove("hidden");
+    textHintContainer.classList.add("hidden");
+  } else if (currentSession.difficulty === "normal") {
+    photoHintContainer.classList.add("hidden");
+    textHintContainer.textContent =
+      "Pistas adicionales aparecerán si te equivocas...";
+    textHintContainer.classList.remove("hidden");
+  } else {
+    photoHintContainer.classList.add("hidden");
+    textHintContainer.classList.add("hidden");
+  }
+}
+function updateHints() {
+  var blurValue;
+  if (currentSession.difficulty === "easy") {
+    blurValue = 8 - currentSession.attempts;
+    if (blurValue < 0) {
+      blurValue = 0;
+    }
+    secretPlayerPhoto.className = "blurLevel" + blurValue;
+  } else if (currentSession.difficulty === "normal") {
+    if (currentSession.attempts === 3) {
+      textHintContainer.textContent =
+        "Pista 1: Su altura es " + secretPlayer.heightCm + " cm.";
+    } else if (currentSession.attempts === 5) {
+      textHintContainer.textContent =
+        "Pista 1: Altura " +
+        secretPlayer.heightCm +
+        " cm | Pista 2: Edad " +
+        secretPlayer.age +
+        " años.";
+    } else if (currentSession.attempts === 7) {
+      textHintContainer.textContent =
+        "Altura: " +
+        secretPlayer.heightCm +
+        " cm | Edad: " +
+        secretPlayer.age +
+        " | Overall: " +
+        secretPlayer.overall;
+    }
+  }
+}
 
 //Api call
 function fetchSecretPlayer() {
@@ -233,7 +337,8 @@ function fetchSecretPlayer() {
     })
     .then(function (data) {
       secretPlayer = data;
-      console.log("Jugador secreto obtenido con éxito: " + secretPlayer.name);
+      initializeHints();
+      console.log("Objeto completo del jugador:", secretPlayer);
       showGameView();
     })
     .catch(function (error) {
@@ -300,3 +405,5 @@ function handleSearchInput(event) {
 
 startForm.addEventListener("submit", handleStartSubmit);
 searchInput.addEventListener("input", handleSearchInput);
+btnRestartWin.addEventListener("click", resetGame);
+btnRestartLose.addEventListener("click", resetGame);

@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="no-referrer" />
     <title>Futbolle</title>
     <link rel="stylesheet" href="reset.css" />
     <link rel="stylesheet" href="style.css" />
@@ -59,7 +60,7 @@
         <div id="photoHintContainer" class="hidden">
           <img id="secretPlayerPhoto" src="" alt="Pista del jugador" />
         </div>
-
+        <div id="textHintContainer" class="hidden"></div>
         <div id="boardContainer">
           <div id="boardHeader">
             <span class="colStat">Nom</span>
@@ -74,8 +75,14 @@
           <div id="attemptsContainer"></div>
         </div>
       </section>
-      <dialog id="winnerDialog">Se ganó el juego</dialog>
-      <dialog id="loserDialog">Se perdió el juego</dialog>
+      <dialog id="winnerDialog">
+        <p id="winnerMessage"></p>
+        <button id="btnRestartWin" class="restartButton">Jugar de Nuevo</button>
+      </dialog>
+      <dialog id="loserDialog">
+        <p id="loserMessage"></p>
+        <button id="btnRestartLose" class="restartButton">Intentar otra vez</button>
+      </dialog>
     </main>
     <footer class="footer">
       <p>Este es el footer bro</p>
