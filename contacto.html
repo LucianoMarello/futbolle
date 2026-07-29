@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Futbolle - Contacto</title>
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Futbolle - Contacto</h1>
+      <div class="headerButtons">
+        <a href="index.html">
+          <button>Volver al Juego</button>
+        </a>
+        <a href="https://github.com/LucianoMarello/futbolle" target="_blank">
+          <button>Ver en GitHub</button>
+        </a>
+      </div>
+    </header>
+    <main>
+      <section id="startView">
+        <p>Envíanos tu consulta. Validaremos los datos.</p>
+        <form id="contactForm" novalidate>
+          <div id="contactInputs">
+            <label>
+              Nombre (Alfanumérico):
+              <input type="text" id="contactName" />
+            </label>
+            <label>
+              Correo Electrónico:
+              <input type="text" id="contactEmail" />
+            </label>
+            <label>
+              Mensaje (Más de 5 caracteres):
+              <textarea id="contactMessage"></textarea>
+            </label>
+          </div>
+          <div id="contactError"></div>
+          <button type="submit" id="btnSubmitContact" class="startButton">
+            Enviar Mensaje
+          </button>
+        </form>
+      </section>
+    </main>
+    <footer class="footer">
+      <p>Este es el footer bro</p>
+    </footer>
+    <script src="contacto.js"></script>
+  </body>
+</html>
