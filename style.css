@@ -36,6 +36,7 @@ header h1 {
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 2px;
+  margin-right: 3rem;
 }
 .headerButtons {
   display: flex;
@@ -76,7 +77,7 @@ main {
 footer {
   background-color: var(--bg-header);
   border-top: 1px solid var(--border-accent);
-  height: auto;
+  height: 1vh;
   padding: 1.5rem;
   display: flex;
   justify-content: center;
@@ -95,6 +96,8 @@ footer {
   padding: 2rem;
   text-align: center;
   color: var(--text-main);
+  width: 80%;
+  max-width: 1000px;
 }
 #startView p {
   margin: 0 0 2rem 0;
@@ -342,8 +345,9 @@ footer {
 
 /* Dialogs */
 .modalDialog {
-  width: 90%;
+  width: 80%;
   max-width: 400px;
+  max-height: 80vh;
   padding: 2rem;
   border: 2px solid var(--border-accent);
   border-radius: 8px;
@@ -372,15 +376,17 @@ dialog.modalDialog[open] {
   justify-content: center;
   margin-top: 1.5rem;
 }
-#statsDialog {
-  max-width: 900px;
-  width: 95%;
-}
 #sortStats {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
+  font-size: 1.2rem;
+}
+#sortStatsInput {
+  padding: 0.5rem 0.3rem;
+  border-radius: 5px;
 }
 #statsTable {
   width: 100%;
@@ -429,6 +435,9 @@ dialog.modalDialog[open] {
 }
 
 /* CONTACTO */
+#contactForm {
+  width: 100%;
+}
 #contactInputs {
   display: flex;
   flex-direction: column;
@@ -469,24 +478,41 @@ dialog.modalDialog[open] {
 
 /* MEDIA QUERIES */
 @media (min-width: 768px) {
-  #gameControls {
-    flex-direction: row-reverse;
-    justify-content: space-between;
-    align-items: flex-start;
+  header {
+    height: 15vh;
   }
-  #searchWrapper {
-    width: 60%;
+  header h1 {
+    font-size: 3rem;
   }
-  .colStat {
-    font-size: 0.85rem;
-    padding: 0.5rem 0.2rem;
+  .headerButtons {
+    flex-direction: row;
   }
   .headerButtons button {
     padding: 0.6rem 1rem;
     font-size: 1rem;
   }
+  main {
+    box-sizing: border-box;
+  }
+  #gameControls {
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    align-items: flex-start;
+  }
+  #searchWrapper {
+    width: 75%;
+  }
+  .modalDialog {
+    max-width: 700px;
+  }
   #statsTable {
-    display: table;
     white-space: normal;
   }
+  .colStat {
+    font-size: 1.2rem;
+    padding: 0.5rem 0.2rem;
+  }
+}
+
+@media (min-width: 1200) {
 }
