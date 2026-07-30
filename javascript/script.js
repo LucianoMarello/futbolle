@@ -28,6 +28,7 @@
   var timerDisplay = document.getElementById("timerDisplay");
   var btnRestarWin = document.getElementById("btnRestartWin");
   var btnRestartLose = document.getElementById("btnRestartLose");
+  var btnRestartGame = document.getElementById("btnRestartGame");
   var winnerMessage = document.getElementById("winnerMessage");
   var loserMessage = document.getElementById("loserMessage");
   var photoHintContainer = document.getElementById("photoHintContainer");
@@ -38,6 +39,9 @@
   var btnCloseStats = document.getElementById("btnCloseStats");
   var statsBody = document.getElementById("statsBody");
   var sortStatsInput = document.getElementById("sortStatsInput");
+  var errorDialog = document.getElementById("errorDialog");
+  var errorMessage = document.getElementById("errorMessage");
+  var btnCloseError = document.getElementById("btnCloseError");
 }
 
 //Functions
@@ -390,6 +394,25 @@ function openStatsModal() {
 function closeStatsModal() {
   statsDialog.close();
 }
+function closeOnBackdropClick(event) {
+  var dialog = event.currentTarget;
+  var rect = dialog.getBoundingClientRect();
+  var isInDialog =
+    rect.top <= event.clientY &&
+    event.clientY <= rect.top + rect.height &&
+    rect.left <= event.clientX &&
+    event.clientX <= rect.left + rect.width;
+  if (!isInDialog) {
+    dialog.close();
+  }
+}
+function showErrorModal(message) {
+  errorMessage.textContent = message;
+  errorDialog.showModal();
+}
+function closeErrorModal() {
+  errorDialog.close();
+}
 
 //Api call
 function fetchSecretPlayer() {
@@ -410,7 +433,9 @@ function fetchSecretPlayer() {
     })
     .catch(function (error) {
       console.error("Error al obtener el jugador secreto: ", error);
-      console.log("Mostrar con dialog luego.");
+      showErrorModal(
+        "No se pudo conectar con el servidor para iniciar la partida. Verifica tu conexión o intenta nuevamente más tarde.",
+      );
       btnStart.disabled = false;
       btnStart.textContent = "Iniciar Juego";
     });
@@ -432,6 +457,7 @@ function fetchAutocompletePlayers(query) {
     })
     .catch(function (error) {
       console.error("Fallo en el autocompletado:", error);
+      showErrorModal("Error de red al buscar jugadores. Intenta de nuevo.");
     });
 }
 
@@ -468,10 +494,18 @@ function handleSearchInput(event) {
   }, 300);
 }
 
-startForm.addEventListener("submit", handleStartSubmit);
-searchInput.addEventListener("input", handleSearchInput);
-btnRestartWin.addEventListener("click", resetGame);
-btnRestartLose.addEventListener("click", resetGame);
-btnOpenStats.addEventListener("click", openStatsModal);
-btnCloseStats.addEventListener("click", closeStatsModal);
-sortStatsInput.addEventListener("change", renderStats);
+{
+  startForm.addEventListener("submit", handleStartSubmit);
+  searchInput.addEventListener("input", handleSearchInput);
+  btnRestartWin.addEventListener("click", resetGame);
+  btnRestartLose.addEventListener("click", resetGame);
+  btnRestartGame.addEventListener("click", resetGame);
+  btnOpenStats.addEventListener("click", openStatsModal);
+  btnCloseStats.addEventListener("click", closeStatsModal);
+  sortStatsInput.addEventListener("change", renderStats);
+  statsDialog.addEventListener("click", closeOnBackdropClick);
+  winnerDialog.addEventListener("click", closeOnBackdropClick);
+  loserDialog.addEventListener("click", closeOnBackdropClick);
+  errorDialog.addEventListener("click", closeOnBackdropClick);
+  btnCloseError.addEventListener("click", closeErrorModal);
+}

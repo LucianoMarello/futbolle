@@ -52,7 +52,10 @@
       <!-- Vista de juego -->
       <section id="gameView" class="hidden">
         <div id="gameControls">
-          <div id="timerDisplay">00:00</div>
+          <div id="actionControls">
+            <div id="timerDisplay">00:00</div>
+            <button id="btnRestartGame" class="startButton">Reiniciar</button>
+          </div>
           <div id="searchWrapper">
             <input
               type="text"
@@ -120,6 +123,13 @@
         </table>
         <div class="modalFooter">
           <button id="btnCloseStats" class="startButton">Cerrar</button>
+        </div>
+      </dialog>
+      <dialog id="errorDialog" class="modalDialog">
+        <h2>Error de Conexión</h2>
+        <p id="errorMessage"></p>
+        <div class="modalFooter">
+          <button id="btnCloseError" class="startButton">Entendido</button>
         </div>
       </dialog>
     </main>

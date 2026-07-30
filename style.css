@@ -19,7 +19,6 @@ body.light-theme {
   --sc-color: #0f7d95;
   --footer-text: #000000c0;
 }
-
 /* HEADER */
 header {
   background-color: var(--bg-header);
@@ -86,7 +85,6 @@ footer {
   font-size: 0.9rem;
   text-align: center;
 }
-
 /* VISTA DE INICIO */
 #startView {
   display: flex;
@@ -178,7 +176,6 @@ footer {
 .startButton:hover {
   background-color: #e5c338;
 }
-
 /* Game View */
 #gameView {
   display: flex;
@@ -194,6 +191,16 @@ footer {
   gap: 1rem;
   width: 100%;
   margin: 0 0 2rem 0;
+}
+#actionControls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+#btnRestartGame {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
 }
 #searchWrapper {
   display: flex;
@@ -342,7 +349,6 @@ footer {
   font-size: 0.7rem;
   word-break: break-word;
 }
-
 /* Dialogs */
 .modalDialog {
   width: 80%;
@@ -411,7 +417,6 @@ dialog.modalDialog[open] {
   border-bottom: 1px solid #1a3a5a;
   color: var(--text-main);
 }
-
 /* CLASES DINAMICAS */
 .match {
   background-color: #2ecc71;
@@ -433,7 +438,6 @@ dialog.modalDialog[open] {
   color: var(--card-text);
   font-weight: bold;
 }
-
 /* CONTACTO */
 #contactForm {
   width: 100%;
@@ -470,12 +474,10 @@ dialog.modalDialog[open] {
   min-height: 1.5rem;
   text-align: center;
 }
-
 /* AUXILIAR */
 .hidden {
   display: none !important;
 }
-
 /* MEDIA QUERIES */
 @media (min-width: 768px) {
   header {
@@ -512,7 +514,4 @@ dialog.modalDialog[open] {
     font-size: 1.2rem;
     padding: 0.5rem 0.2rem;
   }
-}
-
-@media (min-width: 1200) {
 }
