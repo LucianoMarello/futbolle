@@ -1,0 +1,20 @@
+"use strict";
+
+var themeToggle = document.getElementById("themeToggle");
+
+if (localStorage.getItem("futbolle_theme") === "light") {
+  document.body.classList.add("light-theme");
+}
+
+if (themeToggle) {
+  themeToggle.addEventListener("click", function () {
+    document.body.classList.toggle("light-theme");
+
+    // Guardar preferencia
+    if (document.body.classList.contains("light-theme")) {
+      localStorage.setItem("futbolle_theme", "light");
+    } else {
+      localStorage.setItem("futbolle_theme", "dark");
+    }
+  });
+}

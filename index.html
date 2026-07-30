@@ -12,11 +12,12 @@
     <header>
       <h1>Futbolle</h1>
       <div class="headerButtons">
-        <button>Help</button>
-        <button id="btnOpenStats">Stats</button>
-        <a href="contacto.html">
-          <button>Contacto</button>
-        </a>
+        <button id="themeToggle" class="headerBtn" title="Cambiar tema">
+          ☀️ / 🌙
+        </button>
+        <button id="btnOpenStats" class="headerBtn">Stats</button>
+        <!-- El enlace ahora ES el botón -->
+        <a href="contacto.html" class="headerBtn">Contacto</a>
       </div>
     </header>
     <main>
@@ -80,12 +81,12 @@
           <div id="attemptsContainer"></div>
         </div>
       </section>
-      <dialog id="winnerDialog">
+      <dialog id="winnerDialog" class="modalDialog">
         <h2 class="dialogTitle">¡Ganaste!</h2>
         <p id="winnerMessage"></p>
         <button id="btnRestartWin" class="startButton">Jugar de Nuevo</button>
       </dialog>
-      <dialog id="loserDialog">
+      <dialog id="loserDialog" class="modalDialog">
         <h2 class="dialogTitle">Perdiste...</h2>
         <p id="loserMessage"></p>
         <button id="btnRestartLose" class="startButton">
@@ -107,7 +108,7 @@
         <table id="statsTable">
           <thead>
             <tr>
-              <th>Jugador</th>
+              <th>Usuario</th>
               <th>Resultado</th>
               <th>Intentos</th>
               <th>Duración</th>
@@ -117,15 +118,15 @@
           </thead>
           <tbody id="statsBody"></tbody>
         </table>
-        <!-- BORRAR style -->
-        <div style="text-align: center">
+        <div class="modalFooter">
           <button id="btnCloseStats" class="startButton">Cerrar</button>
         </div>
       </dialog>
     </main>
-    <footer class="footer">
-      <p>Este es el footer bro</p>
+    <footer>
+      <p>&copy; 2026 Futbolle. Desarrollado por Luciano Marello.</p>
     </footer>
-    <script src="script.js"></script>
+    <script src="./javascript/script.js"></script>
+    <script src="./javascript/theme.js"></script>
   </body>
 </html>

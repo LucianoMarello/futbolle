@@ -214,8 +214,7 @@ function checkGameStatus(guessedPlayer) {
   if (currentSession.attempts >= 8) {
     stopTimer();
     saveMatchResult(0);
-    loserMessage.textContent =
-      "Perdiste. El jugador secreto era: " + secretPlayer.name;
+    loserMessage.textContent = "El jugador secreto era: " + secretPlayer.name;
     loserDialog.showModal();
     searchInput.disabled = true;
   }
@@ -452,8 +451,6 @@ function handleStartSubmit(event) {
   currentSession.userName = inputName;
   currentSession.difficulty = inputDifficulty;
 
-  console.log("Nombre del jugador: " + currentSession.userName);
-  console.log("Nivel de dificultad: " + currentSession.difficulty);
   fetchSecretPlayer();
 }
 function handleSearchInput(event) {

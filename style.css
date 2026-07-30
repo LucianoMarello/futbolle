@@ -1,21 +1,89 @@
+/* VARIABLES */
+:root {
+  --bg-main: #0b1a2a;
+  --bg-header: #06121e;
+  --text-main: #ffffff;
+  --border-accent: #209bb4;
+  --card-bg: #ffffff;
+  --card-text: #000000;
+  --sc-color: #f9d949;
+  --footer-text: #8892b0;
+}
+body.light-theme {
+  --bg-main: #f4f7f6;
+  --bg-header: #e0e5ec;
+  --text-main: #1a1a1a;
+  --border-accent: #0b5a6b;
+  --card-bg: #ffffff;
+  --card-text: #1a1a1a;
+  --sc-color: #0f7d95;
+  --footer-text: #000000c0;
+}
+
+/* HEADER */
 header {
-  background-color: aquamarine;
-  height: 15vh;
+  background-color: var(--bg-header);
+  border-bottom: 2px solid var(--border-accent);
+  min-height: 10vh;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
+  padding: 1rem 2rem;
 }
+header h1 {
+  color: var(--sc-color);
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.headerButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.headerBtn {
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border: 1px solid var(--border-accent);
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+.headerBtn:hover {
+  background-color: var(--border-accent);
+  color: var(--card-text);
+}
+/* Estructura Base */
 body {
   font-family: Arial, sans-serif;
-  background-color: #0b1a2a;
+  background-color: var(--bg-main);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
-.footer {
-  background-color: #c35b00;
-  height: 10vh;
+main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+}
+footer {
+  background-color: var(--bg-header);
+  border-top: 1px solid var(--border-accent);
+  height: auto;
+  padding: 1.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  color: var(--footer-text);
+  font-size: 0.9rem;
+  text-align: center;
 }
 
 /* VISTA DE INICIO */
@@ -26,7 +94,7 @@ body {
   margin: 2rem auto;
   padding: 2rem;
   text-align: center;
-  color: #ffffff;
+  color: var(--text-main);
 }
 #startView p {
   margin: 0 0 2rem 0;
@@ -53,11 +121,11 @@ body {
   width: 80%;
   margin: 0.5rem 0 0 0;
   padding: 0.8rem;
-  border: 1px solid #209bb4;
+  border: 1px solid var(--border-accent);
   border-radius: 8px;
-  background-color: #06121e;
+  background-color: var(--bg-header);
   text-align: center;
-  color: #ffffff;
+  color: var(--text-main);
   font-size: 1.1rem;
 }
 #levelFieldset {
@@ -82,24 +150,24 @@ body {
 }
 #labels label {
   padding: 0.6rem 1.5rem;
-  border: 2px solid #209bb4;
+  border: 2px solid var(--border-accent);
   border-radius: 20px;
   background-color: transparent;
-  color: #ffffff;
+  color: var(--text-main);
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
 #labels input:checked + label {
-  background-color: #209bb4;
-  color: #0b1a2a;
+  background-color: var(--border-accent);
+  color: var(--bg-main);
 }
 .startButton {
   padding: 1rem 2.5rem;
   border: none;
   border-radius: 8px;
-  background-color: #f9d949;
-  color: #000000;
+  background-color: var(--sc-color);
+  color: var(--card-text);
   font-size: 1.2rem;
   font-weight: bold;
   cursor: pointer;
@@ -114,7 +182,7 @@ body {
   flex-direction: column;
   align-items: center;
   padding: 2rem;
-  color: #ffffff;
+  color: var(--text-main);
 }
 #gameControls {
   display: flex;
@@ -132,10 +200,10 @@ body {
 }
 #searchInput {
   padding: 1rem;
-  border: 2px solid #209bb4;
+  border: 2px solid var(--border-accent);
   border-radius: 0.8rem;
-  background-color: #ffffff;
-  color: #000000;
+  background-color: var(--card-bg);
+  color: var(--card-text);
   font-size: 1.2rem;
 }
 #autocompleteList {
@@ -147,25 +215,25 @@ body {
   max-height: 250px;
   margin: 0;
   padding: 0;
-  border: 1px solid #209bb4;
-  background-color: #06121e;
+  border: 1px solid var(--border-accent);
+  background-color: var(--bg-header);
   overflow-y: auto;
 }
 .autocompleteItem {
   padding: 0.8rem;
   border-bottom: 1px solid #1a3a5a;
-  color: #ffffff;
+  color: var(--text-main);
   cursor: pointer;
 }
 .autocompleteItem:hover {
-  background-color: #209bb4;
-  color: #000000;
+  background-color: var(--border-accent);
+  color: var(--card-text);
 }
 #timerDisplay {
   padding: 1rem;
-  border: 2px solid #f9d949;
+  border: 2px solid var(--sc-color);
   border-radius: 4px;
-  background-color: #06121e;
+  background-color: var(--bg-header);
   font-size: 1.5rem;
   font-weight: bold;
 }
@@ -186,7 +254,7 @@ body {
   text-align: center;
   margin-bottom: 1rem;
   font-weight: bold;
-  color: #f9d949;
+  color: var(--sc-color);
 }
 .blurLevel8 {
   filter: blur(16px);
@@ -225,7 +293,7 @@ body {
   flex-direction: row;
   justify-content: space-around;
   padding: 0.5rem 0;
-  border-bottom: 2px dashed #ffffff;
+  border-bottom: 2px dashed var(--text-main);
   font-weight: bold;
   text-align: center;
 }
@@ -240,10 +308,10 @@ body {
   display: flex;
   flex-direction: column;
   width: 100%;
-  border: 2px solid #ffffff;
+  border: 2px solid var(--text-main);
   border-radius: 6px;
-  background-color: #ffffff;
-  color: #000000;
+  background-color: var(--card-bg);
+  color: var(--card-text);
   overflow: hidden;
 }
 .attemptName {
@@ -265,60 +333,133 @@ body {
   flex: 1;
   justify-content: center;
   align-items: center;
-  padding: 0.5rem 0.2rem;
+  padding: 0.4rem 0.1rem;
   border-radius: 4px;
   text-align: center;
-  font-size: 0.85rem;
+  font-size: 0.7rem;
+  word-break: break-word;
 }
 
 /* Dialogs */
 .modalDialog {
-  width: 80%;
-  max-width: 800px;
-}
-.dialogTitle {
+  width: 90%;
+  max-width: 400px;
+  padding: 2rem;
+  border: 2px solid var(--border-accent);
+  border-radius: 8px;
+  background-color: var(--bg-header);
+  color: var(--text-main);
   text-align: center;
-  margin-bottom: 1rem;
+}
+dialog.modalDialog[open] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+.modalDialog h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+.modalDialog p {
+  white-space: pre-wrap;
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+.modalFooter {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+#statsDialog {
+  max-width: 900px;
+  width: 95%;
 }
 #sortStats {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 #statsTable {
   width: 100%;
   text-align: left;
   border-collapse: collapse;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
 }
 #statsTable thead {
-  border-bottom: 2px solid #000000;
+  border-bottom: 2px solid #ccc;
+}
+#statsTable th {
+  padding: 1rem;
+  border-bottom: 2px solid var(--border-accent);
+  color: var(--sc-color);
+  font-weight: bold;
 }
 .tdStats {
-  padding: 0.5rem 0;
-  border-bottom: 1px solid #cccccc;
+  padding: 1rem;
+  border-bottom: 1px solid #1a3a5a;
+  color: var(--text-main);
 }
 
 /* CLASES DINAMICAS */
 .match {
   background-color: #2ecc71;
-  color: #000000;
+  color: var(--card-text);
   font-weight: bold;
 }
 .mismatch {
   background-color: #e74c3c;
-  color: #ffffff;
+  color: var(--text-main);
   font-weight: bold;
 }
 .higher {
   background-color: #f1c40f;
-  color: #000000;
+  color: var(--card-text);
   font-weight: bold;
 }
 .lower {
   background-color: #f1c40f;
-  color: #000000;
+  color: var(--card-text);
   font-weight: bold;
+}
+
+/* CONTACTO */
+#contactInputs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1.5rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+#contactInputs label {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  font-weight: bold;
+  color: var(--text-main);
+}
+#contactInputs input,
+#contactInputs textarea {
+  margin-top: 0.5rem;
+  padding: 0.8rem;
+  border: 1px solid var(--border-accent);
+  border-radius: 8px;
+  background-color: var(--bg-header);
+  color: var(--text-main);
+  font-family: inherit;
+}
+#contactError {
+  color: #ff4d4d;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  min-height: 1.5rem;
+  text-align: center;
 }
 
 /* AUXILIAR */
@@ -335,5 +476,17 @@ body {
   }
   #searchWrapper {
     width: 60%;
+  }
+  .colStat {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.2rem;
+  }
+  .headerButtons button {
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+  }
+  #statsTable {
+    display: table;
+    white-space: normal;
   }
 }
