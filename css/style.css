@@ -29,13 +29,14 @@ header {
   align-items: center;
   padding: 1rem 2rem;
 }
-header h1 {
+.headerTitle {
   color: var(--sc-color);
   font-size: 1.8rem;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 2px;
   margin-right: 3rem;
+  text-decoration: none;
 }
 .headerButtons {
   display: flex;

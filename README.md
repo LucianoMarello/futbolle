@@ -35,3 +35,14 @@ Al ser un proyecto estrictamente _Client-Side_ sin dependencias de Node.js, no r
    ```bash
    git clone [https://github.com/TuUsuario/futbolle.git](https://github.com/TuUsuario/futbolle.git)
    ```
+2. Abrir el directorio del proyecto.
+3. Ejecutar `index.html` en cualquier navegador moderno o utilizar una extensión como _Live Server_ en VSCode para evitar bloqueos de CORS locales durante las llamadas a la API.
+
+## 🌐 Despliegue en Producción
+
+El proyecto se encuentra desplegado y accesible públicamente a través de GitHub Pages:
+🔗 **[Jugar a Futbolle Aquí](https://tu-usuario.github.io/futbolle)**
+
+---
+
+_Desarrollado por Luciano Marello._
