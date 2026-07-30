@@ -424,7 +424,7 @@ function fetchSecretPlayer() {
     .then(function (data) {
       secretPlayer = data;
       initializeHints();
-      console.log("Objeto completo del jugador:", secretPlayer);
+      console.log("El jugador es: ", secretPlayer.name);
       showGameView();
     })
     .catch(function (error) {

@@ -33,7 +33,7 @@ Al ser un proyecto estrictamente _Client-Side_ sin dependencias de Node.js, no r
 
 1. Clonar el repositorio:
    ```bash
-   git clone [https://github.com/TuUsuario/futbolle.git](https://github.com/TuUsuario/futbolle.git)
+   git clone [https://github.com/LucianoMarello/futbolle.git](https://github.com/LucianoMarello/futbolle.git)
    ```
 2. Abrir el directorio del proyecto.
 3. Ejecutar `index.html` en cualquier navegador moderno o utilizar una extensión como _Live Server_ en VSCode para evitar bloqueos de CORS locales durante las llamadas a la API.
@@ -41,7 +41,7 @@ Al ser un proyecto estrictamente _Client-Side_ sin dependencias de Node.js, no r
 ## 🌐 Despliegue en Producción
 
 El proyecto se encuentra desplegado y accesible públicamente a través de GitHub Pages:
-🔗 **[Jugar a Futbolle Aquí](https://tu-usuario.github.io/futbolle)**
+🔗 **[Jugar a Futbolle Aquí](https://lucianomarello.github.io/futbolle/)**
 
 ---
 
