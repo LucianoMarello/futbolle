@@ -1,5 +1,4 @@
 "use strict";
-
 //Global variables
 {
   var secretPlayer = null;
@@ -13,7 +12,6 @@
   var timerInterval = null;
   var secondsElapsed = 0;
 }
-
 //DOM elements
 {
   var startView = document.getElementById("startView");
@@ -43,7 +41,6 @@
   var errorMessage = document.getElementById("errorMessage");
   var btnCloseError = document.getElementById("btnCloseError");
 }
-
 //Functions
 function showGameView() {
   startView.classList.add("hidden");
@@ -413,7 +410,6 @@ function showErrorModal(message) {
 function closeErrorModal() {
   errorDialog.close();
 }
-
 //Api call
 function fetchSecretPlayer() {
   var url = "https://futbolle-daw-uai-2026.onrender.com/api/players/random";
@@ -444,7 +440,6 @@ function fetchAutocompletePlayers(query) {
   var url =
     "https://futbolle-daw-uai-2026.onrender.com/api/players/search?q=" +
     encodeURIComponent(query);
-
   fetch(url)
     .then(function (response) {
       if (!response.ok) {
@@ -460,7 +455,6 @@ function fetchAutocompletePlayers(query) {
       showErrorModal("Error de red al buscar jugadores. Intenta de nuevo.");
     });
 }
-
 //Event listeners
 function handleStartSubmit(event) {
   var inputName;
@@ -493,7 +487,6 @@ function handleSearchInput(event) {
     fetchAutocompletePlayers(query);
   }, 300);
 }
-
 {
   startForm.addEventListener("submit", handleStartSubmit);
   searchInput.addEventListener("input", handleSearchInput);
