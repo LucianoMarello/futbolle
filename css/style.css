@@ -19,54 +19,13 @@ body.light-theme {
   --sc-color: #0f7d95;
   --footer-text: #000000c0;
 }
-/* HEADER */
-header {
-  background-color: var(--bg-header);
-  border-bottom: 2px solid var(--border-accent);
-  min-height: 10vh;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-}
-.headerTitle {
-  color: var(--sc-color);
-  font-size: 1.8rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-right: 3rem;
-  text-decoration: none;
-}
-.headerButtons {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-.headerBtn {
-  padding: 0.6rem 1rem;
-  font-size: 1rem;
-  font-weight: bold;
-  border: 1px solid var(--border-accent);
-  border-radius: 4px;
-  cursor: pointer;
-  background-color: var(--bg-main);
-  color: var(--text-main);
-  text-decoration: none;
-  white-space: nowrap;
-  transition: all 0.2s ease;
-}
-.headerBtn:hover {
-  background-color: var(--border-accent);
-  color: var(--card-text);
-}
 /* Estructura Base */
 body {
-  font-family: Arial, sans-serif;
-  background-color: var(--bg-main);
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: var(--bg-main);
+  font-family: Arial, sans-serif;
 }
 main {
   display: flex;
@@ -75,40 +34,81 @@ main {
   width: 100%;
 }
 footer {
-  background-color: var(--bg-header);
-  border-top: 1px solid var(--border-accent);
-  height: 1vh;
-  padding: 1.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 1vh;
+  padding: 1.5rem;
+  border-top: 1px solid var(--border-accent);
+  background-color: var(--bg-header);
   color: var(--footer-text);
-  font-size: 0.9rem;
   text-align: center;
+  font-size: 0.9rem;
+}
+/* HEADER */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  border-bottom: 2px solid var(--border-accent);
+  min-height: 10vh;
+  background-color: var(--bg-header);
+}
+.headerTitle {
+  margin-right: 3rem;
+  color: var(--sc-color);
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.headerButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.headerBtn {
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--border-accent);
+  border-radius: 4px;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  text-decoration: none;
+  white-space: nowrap;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.headerBtn:hover {
+  background-color: var(--border-accent);
+  color: var(--card-text);
 }
 /* VISTA DE INICIO */
 #startView {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 80%;
+  max-width: 1000px;
   margin: 2rem auto;
   padding: 2rem;
   text-align: center;
   color: var(--text-main);
-  width: 80%;
-  max-width: 1000px;
 }
 #startView p {
   margin: 0 0 2rem 0;
-  font-size: 1.1rem;
   line-height: 1.5;
+  font-size: 1.1rem;
 }
 #startForm {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
   width: 100%;
+  gap: 1.5rem;
 }
 #userName {
   display: flex;
@@ -142,9 +142,9 @@ footer {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 1rem;
   width: 100%;
   margin: 1rem 0 0 0;
+  gap: 1rem;
 }
 #labels input {
   position: absolute;
@@ -189,15 +189,15 @@ footer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
   width: 100%;
   margin: 0 0 2rem 0;
+  gap: 1rem;
 }
 #actionControls {
   display: flex;
-  gap: 1rem;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
 }
 #btnRestartGame {
   padding: 0.8rem 1.5rem;
@@ -240,13 +240,16 @@ footer {
   background-color: var(--border-accent);
   color: var(--card-text);
 }
-#timerDisplay {
+#timerDisplay,
+#attemptsDisplay {
   padding: 1rem;
   border: 2px solid var(--sc-color);
   border-radius: 4px;
   background-color: var(--bg-header);
   font-size: 1.5rem;
   font-weight: bold;
+  color: var(--text-main);
+  text-align: center;
 }
 #photoHintContainer {
   display: flex;
@@ -262,10 +265,10 @@ footer {
   transition: filter 0.3s ease;
 }
 #textHintContainer {
-  text-align: center;
   margin-bottom: 1rem;
   font-weight: bold;
   color: var(--sc-color);
+  text-align: center;
 }
 .blurLevel8 {
   filter: blur(16px);
@@ -305,15 +308,15 @@ footer {
   justify-content: space-around;
   padding: 0.5rem 0;
   border-bottom: 2px dashed var(--text-main);
-  font-weight: bold;
   text-align: center;
+  font-weight: bold;
 }
 #attemptsContainer {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
   width: 100%;
   margin: 1rem 0 0 0;
+  gap: 0.8rem;
 }
 .attemptCard {
   display: flex;
@@ -369,8 +372,8 @@ dialog.modalDialog[open] {
   gap: 1.5rem;
 }
 .modalDialog h2 {
-  text-align: center;
   margin-bottom: 1.5rem;
+  text-align: center;
   font-size: 1.5rem;
 }
 .modalDialog p {
@@ -384,10 +387,10 @@ dialog.modalDialog[open] {
   margin-top: 1.5rem;
 }
 #sortStats {
-  margin-bottom: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1rem;
   gap: 1rem;
   font-size: 1.2rem;
 }
@@ -396,13 +399,13 @@ dialog.modalDialog[open] {
   border-radius: 5px;
 }
 #statsTable {
-  width: 100%;
-  text-align: left;
-  border-collapse: collapse;
-  margin-bottom: 1.5rem;
   display: block;
-  overflow-x: auto;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  border-collapse: collapse;
   white-space: nowrap;
+  text-align: left;
+  overflow-x: auto;
 }
 #statsTable thead {
   border-bottom: 2px solid #ccc;
@@ -446,22 +449,22 @@ dialog.modalDialog[open] {
 #contactInputs {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  gap: 1.5rem;
   align-items: center;
+  width: 100%;
   margin-bottom: 1rem;
+  gap: 1.5rem;
 }
 #contactInputs label {
   display: flex;
   flex-direction: column;
   width: 80%;
-  font-weight: bold;
   color: var(--text-main);
+  font-weight: bold;
 }
 #contactInputs input,
 #contactInputs textarea {
-  margin-top: 0.5rem;
   padding: 0.8rem;
+  margin-top: 0.5rem;
   border: 1px solid var(--border-accent);
   border-radius: 8px;
   background-color: var(--bg-header);
@@ -469,11 +472,11 @@ dialog.modalDialog[open] {
   font-family: inherit;
 }
 #contactError {
-  color: #ff4d4d;
-  font-weight: bold;
   margin-bottom: 1rem;
   min-height: 1.5rem;
+  color: #ff4d4d;
   text-align: center;
+  font-weight: bold;
 }
 /* AUXILIAR */
 .hidden {
@@ -512,7 +515,7 @@ dialog.modalDialog[open] {
     white-space: normal;
   }
   .colStat {
-    font-size: 1.2rem;
     padding: 0.5rem 0.2rem;
+    font-size: 1.2rem;
   }
 }

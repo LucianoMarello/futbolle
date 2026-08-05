@@ -24,6 +24,7 @@
   var autocompleteList = document.getElementById("autocompleteList");
   var attemptsContainer = document.getElementById("attemptsContainer");
   var timerDisplay = document.getElementById("timerDisplay");
+  var attemptsDisplay = document.getElementById("attemptsDisplay");
   var btnRestarWin = document.getElementById("btnRestartWin");
   var btnRestartLose = document.getElementById("btnRestartLose");
   var btnRestartGame = document.getElementById("btnRestartGame");
@@ -86,33 +87,26 @@ function analyzeAttempt(guessedPlayer, secretPlayer) {
 function createStatElement(value, status) {
   var span = document.createElement("span");
   var text = value;
-
   if (status === "higher") {
     text += " ↑";
   } else if (status === "lower") {
     text += " ↓";
   }
-
   span.textContent = text;
   span.className = "colStat " + status;
-
   return span;
 }
 function renderAttemptCard(analysis) {
   var card;
   var nameDiv;
   var statsDiv;
-
   card = document.createElement("div");
   card.className = "attemptCard";
-
   nameDiv = document.createElement("div");
   nameDiv.className = "attemptName";
   nameDiv.textContent = analysis.playerInfo.name;
-
   statsDiv = document.createElement("div");
   statsDiv.className = "attemptStats";
-
   statsDiv.appendChild(
     createStatElement(
       analysis.playerInfo.nationality,
@@ -134,19 +128,15 @@ function renderAttemptCard(analysis) {
   statsDiv.appendChild(
     createStatElement(analysis.playerInfo.heightCm, analysis.results.heightCm),
   );
-
   card.appendChild(nameDiv);
   card.appendChild(statsDiv);
-
   attemptsContainer.appendChild(card);
 }
 function formatTime(totalSeconds) {
   var minutes = Math.floor(totalSeconds / 60);
   var seconds = totalSeconds % 60;
-
   var minStr = minutes < 10 ? "0" + minutes : minutes;
   var secStr = seconds < 10 ? "0" + seconds : seconds;
-
   return minStr + ":" + secStr;
 }
 function startTimer() {
@@ -190,7 +180,6 @@ function calculateScore() {
 }
 function checkGameStatus(guessedPlayer) {
   var score = 0;
-
   if (guessedPlayer.id === secretPlayer.id) {
     stopTimer();
     score = calculateScore();
@@ -211,7 +200,6 @@ function checkGameStatus(guessedPlayer) {
     searchInput.disabled = true;
     return;
   }
-
   if (currentSession.attempts >= 8) {
     stopTimer();
     saveMatchResult(0);
@@ -223,7 +211,7 @@ function checkGameStatus(guessedPlayer) {
 function playerSelectHandler(selectedPlayer) {
   return function () {
     var attemptAnalysis;
-
+    var intentosRestantes;
     if (currentSession.attemptedIds.indexOf(selectedPlayer.id) !== -1) {
       console.warn(
         "Intento bloqueado: El jugador " +
@@ -236,6 +224,8 @@ function playerSelectHandler(selectedPlayer) {
     }
     currentSession.attemptedIds.push(selectedPlayer.id);
     currentSession.attempts++;
+    intentosRestantes = 8 - currentSession.attempts;
+    attemptsDisplay.textContent = "Intentos: " + intentosRestantes;
     if (currentSession.attempts === 1) {
       startTimer();
     }
@@ -252,13 +242,10 @@ function renderAutocompleteResults(playersData) {
   var li;
   var cleanName;
   var modifiedPlayer;
-
   clearAutocompleteList();
-
   if (playersData.length === 0) {
     return;
   }
-
   for (i = 0; i < playersData.length; i++) {
     li = document.createElement("li");
     cleanName = playersData[i].name.replace(/^\d+\s*/, "");
@@ -276,6 +263,7 @@ function resetGame() {
   currentSession.attemptedIds = [];
   stopTimer();
   secondsElapsed = 0;
+  attemptsDisplay.textContent = "Intentos: 8";
   timerDisplay.textContent = "00:00";
   while (attemptsContainer.firstChild) {
     attemptsContainer.removeChild(attemptsContainer.firstChild);
@@ -357,7 +345,6 @@ function renderStats() {
   var stats = JSON.parse(localStorage.getItem("futbolle_stats")) || [];
   var sortValue = sortStatsInput.value;
   var i, tr;
-
   stats.sort(function (a, b) {
     if (sortValue === "dateDesc") return b.time - a.time;
     if (sortValue === "dateAsc") return a.time - b.time;
@@ -366,21 +353,17 @@ function renderStats() {
     if (sortValue === "scoreDesc") return b.score - a.score;
     return 0;
   });
-
   while (statsBody.firstChild) {
     statsBody.removeChild(statsBody.firstChild);
   }
-
   for (i = 0; i < stats.length; i++) {
     tr = document.createElement("tr");
-
     tr.appendChild(createTableCell(stats[i].name));
     tr.appendChild(createTableCell(stats[i].result));
     tr.appendChild(createTableCell(stats[i].attempts));
     tr.appendChild(createTableCell(stats[i].duration));
     tr.appendChild(createTableCell(stats[i].dateString));
     tr.appendChild(createTableCell(stats[i].score));
-
     statsBody.appendChild(tr);
   }
 }
@@ -413,7 +396,6 @@ function closeErrorModal() {
 //Api call
 function fetchSecretPlayer() {
   var url = "https://futbolle-daw-uai-2026.onrender.com/api/players/random";
-
   fetch(url)
     .then(function (response) {
       if (!response.ok) {
@@ -459,18 +441,13 @@ function fetchAutocompletePlayers(query) {
 function handleStartSubmit(event) {
   var inputName;
   var inputDifficulty;
-
   event.preventDefault();
-
   btnStart.disabled = true;
   btnStart.textContent = "Cargando...";
-
   inputName = startForm.elements["userName"].value;
   inputDifficulty = startForm.elements["level"].value;
-
   currentSession.userName = inputName;
   currentSession.difficulty = inputDifficulty;
-
   fetchSecretPlayer();
 }
 function handleSearchInput(event) {
@@ -482,7 +459,7 @@ function handleSearchInput(event) {
     clearAutocompleteList();
     return;
   }
-  //Se aplica metodo Debounce
+  //debounce method to avoid too many requests
   searchTimeout = setTimeout(function () {
     fetchAutocompletePlayers(query);
   }, 300);
